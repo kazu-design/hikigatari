@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomized Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            font-size: 1.0em;
+        }
+        p {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: red;
+            border: 2px solid red;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ffe5e5;
+            display: inline-block;
+        }
+        p span {
+            text-decoration: underline;
+        }
+        .line {
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #333;
+            border: 1px solid #007BFF;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: inline-block;
+            width: 80%;
+            transition: background-color 0.3s ease;
+        }
+        .line a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .line a:hover {
+            text-decoration: underline;
+        }
+        .line.visited {
+            background-color: #d3d3d3; /* Darker background for visited links */
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>弾き語り音源の伴奏の印象に関する項目</h1>
+    <p>以下の音源リンクを上から順にクリックし、リンク先のブラウザにて再生してください。<br>
+      音源を再生した後、調査画面（Google Forms）に戻り、再生した音源の番号に対応した質問項目に回答してください。<br>
+      （例：本ブラウザの音源３を再生した場合、調査画面上の「音源３」までスクロールし、各質問に回答）<br>
+      なお、<span>本ブラウザの更新ボタンは押さないようにしてください。</span></p>
+    <div id="randomized-links"></div>
+
+    <script>
+        // Lines with URLs to be randomized
+        const links = [
+            { text: "音源 1", url: "https://drive.google.com/file/d/1_3LyhrdODi3x3X6MxBOpH7K2r82Y4Ojv/view?usp=drive_link" },
+            { text: "音源 2", url: "https://drive.google.com/file/d/1CXqZc2wfXbm-qY8te1q13onKE4vY144P/view?usp=drive_link" },
+            { text: "音源 3", url: "https://drive.google.com/file/d/1mNwONi5haOwdVLs3XcW4ee_dXxIKNewJ/view?usp=drive_link" },
+            { text: "音源 4", url: "https://drive.google.com/file/d/1yNzvDuxipKRkSoXr_o9xi6iK-PdwwJNP/view?usp=drive_link" },
+            { text: "音源 5", url: "https://drive.google.com/file/d/1MI7CVhluK-6eB2WLA30oSnhC8Q1Lz2jd/view?usp=drive_link" },
+            { text: "音源 6", url: "https://drive.google.com/file/d/1ofPVvbljo37IdNKE_IjAUVjnjqcYT4cM/view?usp=drive_link" },
+            { text: "音源 7", url: "https://drive.google.com/file/d/1pGuQlTSCFmEVfnEUOdJThNIsvKB2PFJF/view?usp=drive_link" },
+            { text: "音源 8", url: "https://drive.google.com/file/d/156DYCvrNLvcLFORAR1181CJhXdKLDER9/view?usp=sharing" },
+            { text: "音源 9", url: "https://drive.google.com/file/d/1pNndvPDSE-NATY0vaZN6wRHwWrjE9xP3/view?usp=drive_link" },
+            { text: "音源 10", url: "https://drive.google.com/file/d/1Z7hMa5LE0iXRiSpbKqtlzD8dqF_8WhOB/view?usp=drive_link" },
+            { text: "音源 11", url: "https://drive.google.com/file/d/1xy0yWGaKdYe7FvDSMhYgKyya1zcIyZWK/view?usp=drive_link" },
+            { text: "音源 12", url: "https://drive.google.com/file/d/1PjKy1BCdplwcsbc0ccLDJoRxle6VgwN-/view?usp=drive_link" },
+            { text: "音源 13", url: "https://drive.google.com/file/d/10fJ3NFgyCwxcSXnUVfmjOB5yD4vAyf3E/view?usp=drive_link" },
+            { text: "音源 14", url: "https://drive.google.com/file/d/13CI8whHryvZSNqWDgkCzinQ1i3R_i0WF/view?usp=drive_link" },
+        ];
+
+        // Function to shuffle the links
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Randomize links and display them
+        const randomizedLinks = shuffle([...links]);
+        const container = document.getElementById("randomized-links");
+
+        randomizedLinks.forEach(link => {
+            const div = document.createElement("div");
+            div.className = "line";
+            const anchor = document.createElement("a");
+            anchor.href = link.url;
+            anchor.target = "_blank"; // Open in a new tab
+            anchor.textContent = link.text;
+
+            // Mark the parent div as visited on click and add "(再生済み)"
+            anchor.addEventListener('click', () => {
+                div.classList.add('visited');
+                if (!div.textContent.includes("　再生済み")) {
+                    div.appendChild(document.createTextNode("　再生済み"));
+                }
+            });
+
+            div.appendChild(anchor);
+            container.appendChild(div);
+        });
+    </script>
+</body>
+</html>
